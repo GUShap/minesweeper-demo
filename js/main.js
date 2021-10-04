@@ -66,9 +66,9 @@ function cellMarked(elCell, i, j) {
     renderBoard(gBoard, '.board-container')//DOM
 }
 
-function expandShown()
+// function expandShown()
 
 
 
-function checkGameOver() {
-}
+// function checkGameOver() {
+// }
