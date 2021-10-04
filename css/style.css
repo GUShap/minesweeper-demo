@@ -1,0 +1,31 @@
+body {
+    text-align: center;
+}
+
+.table {
+    margin: auto;
+    margin-top: 5%;
+}
+
+.cell {
+    width: 40px;
+    height: 40px;
+}
+
+.mine {
+    z-index: 1;
+    /* display:none; */
+    background-image: url(../images/mine.jpg);
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.marked {}
+
+.back {
+    z-index: 99;
+    position: relative;
+    width: 40px;
+    height: 40px;
+    background-color: rgba(134, 104, 104, 0.787);
+}
