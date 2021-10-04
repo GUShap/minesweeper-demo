@@ -4,6 +4,8 @@ var gGame;
 var gBoard;
 var gLevel;
 var gMinesLocations;
+var gEmptyCells;
+var gLives;
 
 var gClicksCounter = 0;
 
@@ -15,6 +17,7 @@ function init(size, minesCount) {
         SIZE: size,
         MINES: minesCount
     }
+    gEmptyCells=[]
     gBoard = createBoard(size, size)
     createMines(minesCount)
     playGame()
@@ -34,24 +37,38 @@ function playGame() {
 
 function whichButton(event, i, j) {
     if (event.which === 1) {
-        flipCell(elCell, i, j)
+        cellClicked(elCell, i, j)
         if (!gClicksCounter) gClicksCounter++ // cheking for the first click
-        console.log(gClicksCounter);
     }
-    // else markCell()
+
+    else cellMarked(elCell, i, j)
 }
 
 
 
-function flipCell(elCell, i, j) {
+function cellClicked(elCell, i, j) {
     elCell = document.querySelector('.cell')
-    if (gBoard[i][j].isShown) return //if a crad is already flipped return
-    elCell.classList.remove('back')
-    // the '.mine' selctor is added in renderBoard() 
+    if (gBoard[i][j].isShown) return //if a crad is already flipped return 
 
-    gBoard[i][j].isShown = true
+    gBoard[i][j].isShown = true //model
+    if (!gBoard[i][j].minesAroundCount){
 
-    renderBoard(gBoard, '.board-container')
-
+    }
+        renderBoard(gBoard, '.board-container')//DOM
 }
 
+function cellMarked(elCell, i, j) {
+    if (gBoard[i][j].isShown) return
+    elCell = document.querySelector('.cell')
+
+    gBoard[i][j].isMarked = !gBoard[i][j].isMarked//model
+
+    renderBoard(gBoard, '.board-container')//DOM
+}
+
+function expandShown()
+
+
+
+function checkGameOver() {
+}

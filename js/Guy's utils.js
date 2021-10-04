@@ -35,6 +35,7 @@ function countMinesAround(mat, rowIdx, colIdx) {
             if (i === rowIdx && j === colIdx) continue;
 
             if (mat[i][j].isMine) count++;
+            // else mat[i][j]
         }
     }
     return count;
@@ -63,12 +64,13 @@ function renderBoard(mat, selector) {
         strHTML += '<tr>';
         for (var j = 0; j < mat[0].length; j++) {
             var cell = mat[i][j];
-            
+
             if(cell.isMine) cell.minesAroundCount = 0;
 
             var className = `cell cell${i}-${j}`;
 
             if (cell.isMine && cell.isShown) className += ` mine`
+            else if(cell.isMarked) className+=` marked`
 
             if (cell.isShown) {
                 if (cell.minesAroundCount) strHTML += `<td class="${className}">${cell.minesAroundCount}</td>`
