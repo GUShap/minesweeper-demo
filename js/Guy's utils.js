@@ -1,40 +1,22 @@
-function getRandomColor() {
-    var letters = '0123456789ABCDEF';
-    var color = '#';
-    for (var i = 0; i < 6; i++) {
-        color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
-}
+
 function getRandomInt(min, max) {
     var rand = Math.floor(Math.random() * (max - min) + min)
     return rand
 }
 
-function shuffle(items) {
-    var randIdx, keep, i
-    for (i = items.length - 1; i > 0; i--) {
-        randIdx = getRandomInt(0, items.length - 1)
-        keep = items[i]
-        items[i] = items[randIdx]
-        items[randIdx] = keep
-    }
-    return items
-}
-
-function countMinesAround(mat, rowIdx, colIdx) {
+function countMinesAround(board, rowIdx, colIdx) {
     var count = 0;
     for (var i = rowIdx - 1; i <= rowIdx + 1; i++) {
         // not outside mat
-        if (i < 0 || i > mat.length - 1) continue;
+        if (i < 0 || i > board.length - 1) continue;
         for (var j = colIdx - 1; j <= colIdx + 1; j++) {
             // not outside mat
-            if (j < 0 || j > mat[0].length - 1) continue;
+            if (j < 0 || j > board[0].length - 1) continue;
 
             // not on selected pos
             if (i === rowIdx && j === colIdx) continue;
 
-            if (mat[i][j].isMine) count++;
+            if (board[i][j].isMine) count++;
             // else mat[i][j]
         }
     }
@@ -50,7 +32,8 @@ function createBoard(ROWS, COLS) {
             board[i][j] = {
                 isShown: false,
                 isMine: false,
-                isMarked: false
+                isMarked: false,
+                minesAroundCount: null
             }
         }
     }
@@ -65,18 +48,18 @@ function renderBoard(mat, selector) {
         for (var j = 0; j < mat[0].length; j++) {
             var cell = mat[i][j];
 
-            if(cell.isMine) cell.minesAroundCount = 0;
+            if (cell.isMine) cell.minesAroundCount = 0;
 
             var className = `cell cell${i}-${j}`;
 
             if (cell.isMine && cell.isShown) className += ` mine`
-            else if(cell.isMarked) className+=` marked`
+            else if (cell.isMarked) className += ` marked`
 
             if (cell.isShown) {
-                if (cell.minesAroundCount) strHTML += `<td class="${className}">${cell.minesAroundCount}</td>`
-                else strHTML += `<td class="${className}">${''}</td>`;
+                if (!cell.minesAroundCount) strHTML += `<td class="${className}">${''}</td>`
+                else strHTML += `<td class="${className}">${cell.minesAroundCount}</td>`;
             }
-            else strHTML += `<td class="${className} back" onmouseup="whichButton(event,${i},${j})">${''}</td>`
+            else strHTML += `<td class="${className} back" onclick="firstClick(${i},${j})" onmouseup="whichButton(event,${i},${j})">${''}</td>`
         }
         strHTML += '</tr>'
     }
@@ -92,6 +75,33 @@ function renderCell(i, j, value) {
     elCell.innerHTML = value;
 }
 
+function renderLives(count, selector) {
+    var elContainer = document.querySelector(selector);
+    var strHTML = ` `
+    for (var i = 0; i < count; i++) {
+        strHTML += `<div class="life"></div>`
+    }
+    elContainer.innerHTML += strHTML;
+}
 
+
+function setTimer() {
+    var startTime = new Date();
+    gInterval = setInterval(getTime, 1)
+
+    function getTime() {
+        var txt = 'time\n'
+        var time = new Date()
+        var timeDiff = time - startTime
+        var minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((timeDiff % (1000 * 60)) / 1000)
+
+        minutes = (minutes < 10) ? '0' + minutes : minutes
+        seconds = (seconds < 10) ? '0' + seconds : seconds
+
+        var elTime = document.querySelector('.stopwatch');
+        elTime.innerText =` ${txt}${minutes}:${seconds}`
+    }
+}
 
 

@@ -1,23 +1,29 @@
 'use strict';
 
 function createMines(count) {
-    for (var i = 0; i < count; i++) {
+    while (gMinesLocations.length < count) {
         createMine(gBoard, gMinesLocations)
     }
 }
 
-function createMine(board, minesLocations) {
-    var randIdxI = getRandomInt(0, board.length - 1)
-    var randIdxJ = getRandomInt(0, board.length - 1)
-    minesLocations = gMinesLocations
-    for (var i = 0; i < minesLocations.length; i++) {
-        if (minesLocations[i].i === randIdxI && minesLocations.j === randIdxJ) continue
+function createMine(board) {
+    var location = {
+        randIdxI: getRandomInt(0, board.length),
+        randIdxJ: getRandomInt(0, board.length)
     }
-
-    board[randIdxI][randIdxJ] = {
+    board[location.randIdxI][location.randIdxJ] = {
         isShown: false,
         isMine: true,
         isMarked: false
     }
-    gMinesLocations.push({ i: randIdxI, j: randIdxJ })
+    
+    // preventing dubbles
+    if (!gMinesLocations.some(loc=> locationMatch(loc, location))){
+     gMinesLocations.push(location)
+    }
+}
+
+
+function locationMatch(a, b) {
+    return a.randIdxI === b.randIdxI && a.randIdxJ === b.randIdxJ
 }

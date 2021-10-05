@@ -1,21 +1,80 @@
-*{
-   box-sizing: border-box; 
+* {
+    box-sizing: border-box;
 }
+
 body {
     text-align: center;
+    background-image: url(../images/backgroung.jpg);
+    background-repeat: repeat;
+}
+
+h1 {
+    font-family: 'Lucida Console';
+}
+
+.stopwatch {
+    width: 40px;
+    height: 20px;
+    display: block;
+    margin-left: 250px;
+    font-family: 'Lucida Console';
+}
+
+.btn {
+    position: absolute;
+    transform: translateX(-50%);
+    margin-left: 50%;
+    margin-top: -20px;
+}
+
+button {
+    width: 70px;
+    height: 30px;
+    display: ruby;
+    font-family: 'Lucida Console';
+    font-weight: 1000;
+    border-radius: 6px;
+}
+
+button:hover {
+    width: 72px;
+    height: 32px;
+    cursor: pointer;
+}
+
+.life {
+    margin-top: 10px;
+    width: 40px;
+    height: 40px;
+    display:inline-block;
+    background-image: url(../images/life.jpg);
+    background-repeat: no-repeat;
+    background-size: contain;
+    border-right-color: transparent;
+    border-bottom-color: transparent;
+    opacity: 0.5;
+    transform: translateX(-50%);
+    margin: 1%;
 }
 
 .table {
+    position: absolute;
     margin: auto;
-    margin-top: 3%;
+    margin-top: 10px;
+    margin-left: 50%;
+    border: 1px solid rgba(182, 182, 182, 0.678);
+    transform: translateX(-50%);
 }
 
 .cell {
     width: 40px;
     height: 40px;
-    border: 3px solid rgb(0, 9, 128);
+    border: 4px solid rgb(157, 159, 179);
+    font-size: 23px;
+    font-family: 'AR DARLING';
+    color: rgb(65, 11, 11);
+    background-color: rgba(122, 122, 122, 0.883);    
 }
-
 
 .mine {
     background-image: url(../images/mine.jpg);
@@ -30,16 +89,46 @@ body {
 }
 
 .back {
-    position: relative;
+    display: table-cell;
     width: 40px;
     height: 40px;
-    background-color: rgba(134, 104, 104, 0.787);
+    background-color: rgb(134, 104, 104);
 }
 
-.back:hover{
-opacity: 0.7;
+.back:hover {
+    opacity: 0.7;
 }
 
-footer{
+.modal.game-over {
     position: absolute;
+    margin-top: 530px;
+    font-family: 'Lucida Console';
+    font-size: 40px;
+    width: 270px;
+    height: 30px;
+    transform: translateX(-50%);
+    margin-left: 50%;
+}
+
+.modal.victory {
+    display: inline-block;
+    position: relative;
+    text-align: center;
+    padding: 25px;
+    font-family: 'Reprise Stamp Std';
+    font-size: 35px;
+    width: 400px;
+    margin-left: 50%;
+    margin-top: 40%;
+    transform: translateX(-50%);
+    transition: 0.7s;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    left: 20%;
+    transform: translateX(-50%);
+    font-family: 'Amatica SC';
+    font-size: 35px;
 }
