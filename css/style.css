@@ -119,7 +119,7 @@ button:hover {
     font-size: 35px;
     width: 400px;
     margin-left: 50%;
-    margin-top: 40%;
+    margin-top: 30%;
     transform: translateX(-50%);
     transition: 0.7s;
 }
