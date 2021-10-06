@@ -37,16 +37,41 @@ button {
 }
 
 button:hover {
-    width: 72px;
-    height: 32px;
+    background-color: cornsilk;
     cursor: pointer;
 }
 
+.hint {
+    position: absolute;
+    width: 80px;
+    margin-left:20%;
+    background-color: rgba(151, 245, 225, 0.972);
+    font-family: 'Arial';
+}
+.hint:hover{
+    background-color: rgb(242, 251, 158);
+}
+
+.face{
+    display:inline-flex;
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    font-size: 50px;
+    margin-top: 10%;
+    margin-left: -330px;
+    cursor: pointer;
+}
+.lives {
+    height: 40px;
+    display: block;
+}
+
 .life {
+    display: inline-block;
     margin-top: 10px;
     width: 40px;
     height: 40px;
-    display:inline-block;
     background-image: url(../images/life.jpg);
     background-repeat: no-repeat;
     background-size: contain;
@@ -57,7 +82,18 @@ button:hover {
     margin: 1%;
 }
 
-.table {
+.safe{
+    position: absolute;
+   background-color:rgba(176, 196, 222, 0.589);
+   width: 100px;
+   height: 45px;
+   /* display: inline-block; */
+   margin-top: 60px;
+   margin-left: 307px;
+   /* position: absolute; */
+}
+
+.board-container {
     position: absolute;
     margin: auto;
     margin-top: 10px;
@@ -73,7 +109,7 @@ button:hover {
     font-size: 23px;
     font-family: 'AR DARLING';
     color: rgb(65, 11, 11);
-    background-color: rgba(122, 122, 122, 0.883);    
+    background-color: rgba(122, 122, 122, 0.883);
 }
 
 .mine {
@@ -101,7 +137,7 @@ button:hover {
 
 .modal.game-over {
     position: absolute;
-    margin-top: 530px;
+    margin-top: 400px;
     font-family: 'Lucida Console';
     font-size: 40px;
     width: 270px;
@@ -119,7 +155,7 @@ button:hover {
     font-size: 35px;
     width: 400px;
     margin-left: 50%;
-    margin-top: 30%;
+    margin-top: 20%;
     transform: translateX(-50%);
     transition: 0.7s;
 }

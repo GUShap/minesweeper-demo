@@ -9,24 +9,16 @@ var gMinesCount;
 var gLivesCount;
 
 var gClicksCount;
+var gSafeClickCount;
 
 var gInterval;
-//global selectors
-var elCell = document.querySelector('.cell')
-var elModal = document.querySelector('.modal')
-var elLives = document.querySelector('.lives')
+var gHintMode = false;
+
 
 
 function init(size, minesCount) {
     clearInterval(gInterval)
-
-    elModal.classList.remove('game-over', 'victory');
-    elModal.style.display = 'none'
-    elLives.innerHTML = ''
-
-    gClicksCount = 0
     gMinesLocations = [];
-
     gGame = {
         isOn: true,
         shownCount: 0,
@@ -40,34 +32,37 @@ function init(size, minesCount) {
 
     if (minesCount <= 2) gLivesCount = 2
     else gLivesCount = 3;
+    gClicksCount = 0
+    gSafeClickCount = 3;
 
     gBoard = createBoard(size, size)
     createMines(minesCount)
-    renderBoard(gBoard, '.board-container')
     gMinesCount = gMinesLocations.length
-    renderLives(gLivesCount, '.lives')
+    renderAll()
+
+
 }
 
 
 function whichButton(event, i, j) {
     if (!gGame.isOn) return
     if (event.which === 1) {
-        cellClicked(elCell, i, j)
+        cellClicked(i, j)
         if (!gClicksCount) gClicksCount++ // cheking for the first click
     }
-    else cellMarked(elCell, i, j)
+    else cellMarked(i, j)
 }
 
 
 
-function cellClicked(elCell, i, j) {
+function cellClicked(i, j) {
 
     var minesCount = countMinesAround(gBoard, i, j)
     gBoard[i][j].minesAroundCount = minesCount
 
     if (!gClicksCount) setTimer()
 
-    elCell = document.querySelector('.cell')
+
     if (gBoard[i][j].isShown) return //if a crad is already flipped return 
 
     gBoard[i][j].isShown = true //model
@@ -82,15 +77,12 @@ function cellClicked(elCell, i, j) {
     }
     expandShown(gBoard, i, j)
     isWin();
-    
     renderBoard(gBoard, '.board-container')//DOM
 }
 
-function cellMarked(elCell, i, j) {
+function cellMarked(i, j) {
 
     if (gBoard[i][j].isShown) return
-
-    elCell = document.querySelector('.cell')
 
     //marked counter
     if (!gBoard[i][j].isMarked) gGame.markedCount++;
@@ -108,14 +100,15 @@ function checkGameOver(isWin) {
     if (!isWin) {
         elModal.classList.add('game-over')
         elText.innerText = 'Game Over'
+        clearInterval(gInterval)
     }
     else {
         elModal.classList.add('victory')
         elText.innerText = 'Congratulations,\n You Won!!'
+        clearInterval(gInterval)
     }
     elLives.innerHTML = ``
     elModal.style.display = 'block'
-    clearInterval(gInterval)
     gGame.isOn = false;
     gGame.shownCount = 0;
     gClicksCount = 0;
@@ -156,21 +149,61 @@ function expandShown(board, rowIdx, colIdx) {
             if (!board[i][j].isShown) gGame.shownCount++
             board[i][j].isShown = true
 
-            if (!board[i][j].isMine && !board[i][j].isShown) expandShown(board, i,j)
+            if (!board[i][j].isMine && !board[i][j].isShown) expandShown(board, i, j)
         }
     }
 }
 
 
 
-function firstClick(i, j) {
-    if (gClicksCount) return
+// function firstClick(i, j) {
+//     if (gClicksCount) return
 
-    gBoard[i][j] = {
-        isShown: false,
-        isMine: false,
-        isMarked: false,
-        minesAroundCount: countMinesAround(gBoard, i, j)
-    }
+//     gBoard[i][j] = {
+//         isShown: false,
+//         isMine: false,
+//         isMarked: false,
+//         minesAroundCount: countMinesAround(gBoard, i, j)
+//     }
+//     renderBoard(gBoard, '.board-container')
+// }
+
+
+function hintMode() {
+    gHintMode = true
     renderBoard(gBoard, '.board-container')
 }
+
+
+function getHint(rowIdx, colIdx) {
+    gHintsleft--;
+    console.log(gHintsleft);
+    for (var i = rowIdx - 1; i <= rowIdx + 1; i++) {
+        if (i < 0 || i > gBoard.length - 1) continue;
+        for (var j = colIdx - 1; j <= colIdx + 1; j++) {
+            // console.log('dd');
+            if (j < 0 || j > gBoard[0].length - 1) continue;
+            gBoard[i][j].minesAroundCount = countMinesAround(gBoard, i, j)
+            gBoard[i][j].isShown = true
+        }
+    }
+    renderBoard(gBoard, '.board-container')
+    console.log(gHintMode);
+
+    setTimeout(function () {
+
+        for (var i = rowIdx - 1; i <= rowIdx + 1; i++) {
+            if (i < 0 || i > gBoard.length - 1) continue;
+            for (var j = colIdx - 1; j <= colIdx + 1; j++) {
+                // console.log('dd');
+                if (j < 0 || j > gBoard[0].length - 1) continue;
+                gBoard[i][j].isShown = false
+            }
+        }
+        renderBoard(gBoard, '.board-container')
+    }, 1000)
+    gHintMode = false
+    renderHints()
+}
+
+

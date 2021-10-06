@@ -12,24 +12,30 @@
 <body onload="init(4,2)" oncontextmenu="return false;">
     <!--loading easy mode & cancell right click menu -->
     <h1>GUS Minesweeper</h1>
-    <h3 class="stopwatch">time 00:00</h3>
-    
+    <h3 class="stopwatch"></h3>
+
     <div class="btn">
-        <button  id="easy" onclick="init(4, 2);">Easy</button>
-        <button  id="medium" onclick="init(8, 12)">Medium</button>
-        <button  id="hard" onclick="init(12, 30)">Hard</button>
+        <button id="easy" onclick="init(4, 2);">Easy</button>
+        <button id="medium" onclick="init(8, 12)">Medium</button>
+        <button id="hard" onclick="init(12, 30)">Hard</button>
     </div>
+    <div class="face" onclick="faceClick()"></div>
+
+    <button class="hint" onclick="hintMode()"></button>
+
+    <button class="safe" onclick="findSafeCell()"></button>
 
     <div class="lives"></div>
 
     <div class="board-container"></div>
 
-<div class="modal"> 
+    <div class="modal">
         <span class="end-game-text"></span>
     </div>
 
 
     <script src="js/Guy's utils.js"></script>
+    <script src="js/render.js"></script>
     <script src="js/Mines.js"></script>
     <script src="js/main.js"></script>
 </body>

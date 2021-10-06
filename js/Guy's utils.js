@@ -41,53 +41,9 @@ function createBoard(ROWS, COLS) {
 }
 
 
-function renderBoard(mat, selector) {
-    var strHTML = '<table class ="table" border="1"><tbody>';//the bord will show only with border>0
-    for (var i = 0; i < mat.length; i++) {
-        strHTML += '<tr>';
-        for (var j = 0; j < mat[0].length; j++) {
-            var cell = mat[i][j];
-
-            if (cell.isMine) cell.minesAroundCount = 0;
-
-            var className = `cell cell${i}-${j}`;
-
-            if (cell.isMine && cell.isShown) className += ` mine`
-            else if (cell.isMarked) className += ` marked`
-
-            if (cell.isShown) {
-                if (!cell.minesAroundCount) strHTML += `<td class="${className}">${''}</td>`
-                else strHTML += `<td class="${className}">${cell.minesAroundCount}</td>`;
-            }
-            else strHTML += `<td class="${className} back" onclick="firstClick(${i},${j})" onmouseup="whichButton(event,${i},${j})">${''}</td>`
-        }
-        strHTML += '</tr>'
-    }
-    strHTML += '</tbody></table>';
-    var elContainer = document.querySelector(selector);
-    elContainer.innerHTML = strHTML;
-}
-
-// location such as: {i: 2, j: 7}
-function renderCell(i, j, value) {
-    // Select the elCell and set the value
-    var elCell = document.querySelector(`.cell${i}-${j}`);
-    elCell.innerHTML = value;
-}
-
-function renderLives(count, selector) {
-    var elContainer = document.querySelector(selector);
-    var strHTML = ` `
-    for (var i = 0; i < count; i++) {
-        strHTML += `<div class="life"></div>`
-    }
-    elContainer.innerHTML += strHTML;
-}
-
-
 function setTimer() {
     var startTime = new Date();
-    gInterval = setInterval(getTime, 1)
+    gInterval = setInterval(getTime, 1000)
 
     function getTime() {
         var txt = 'time\n'
@@ -100,8 +56,13 @@ function setTimer() {
         seconds = (seconds < 10) ? '0' + seconds : seconds
 
         var elTime = document.querySelector('.stopwatch');
-        elTime.innerText =` ${txt}${minutes}:${seconds}`
+        elTime.innerText = ` ${txt}${minutes}:${seconds}`
     }
 }
+
+
+
+
+
 
 
